@@ -8,5 +8,36 @@
 </head>
 <body>
      <h1>Heading</h1>
+     <form>
+         <div>
+             <label>Select a video:</label>
+             <input type="file" accept="video/*" />
+         </div>
+         <div>
+             <button type="sumbit">Get info</button>
+         </div>
+     </form>
+     <h1 id="duration"></h1>
+    <script>
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+
+        document.querySelector("form").addEventListener("submit", (event)=>{
+            event.preventDefault();
+            console.log("form submit...");
+
+            const file = document.querySelector("input").files[0];
+
+            const { path } = file;
+            // video:sumit => video was sumbitted...
+            ipcRenderer.send('video:sumbit', path);
+
+        });
+        ipcRenderer.on("video:fetchMetadata", (event, duration)=>{
+            console.log("event", event);
+            console.log("duration of video is", duration);
+            document.querySelector("#duration").innerHTML = `Duration of video is ${duration} in seconds.`
+        });
+    </script>
 </body>
 </html>
