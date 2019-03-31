@@ -27,8 +27,8 @@ const { app, BrowserWindow, ipcMain } = electron;
 
 
 let mainWindow;
-app.on('ready', ()=>{
-    console.log("App is now ready");
+app.on('ready', (...args)=>{
+    console.log("App is now ready",args);
     /**
      *      Electron App (index.js=> creates browser window)
      *            |
